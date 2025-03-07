@@ -1,0 +1,14 @@
+.invoice-list {
+    margin: 20px;
+  }
+  .invoice-list ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  .invoice-list li {
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin-bottom: 5px;
+    cursor: pointer;
+  }
+  

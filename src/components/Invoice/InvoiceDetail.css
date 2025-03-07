@@ -1,0 +1,10 @@
+.invoice-detail {
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin: 20px;
+    background-color: #fff;
+  }
+  .invoice-summary {
+    margin-top: 20px;
+  }
+  
