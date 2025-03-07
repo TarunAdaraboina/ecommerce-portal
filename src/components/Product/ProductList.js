@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import ProductForm from './ProductForm';
 import ProductDetail from './ProductDetail';
 import SearchBar from '../Filters/SearchBar';
 import StoreFilter from '../Filters/StoreFilter';
@@ -36,6 +37,8 @@ function ProductList() {
   const storeNames = [...new Set(products.map((product) => product.storeName || 'Unknown Store'))];
 
   return (
+    <>
+    <ProductForm/>
     <div className="product-list">
       <h2 className="product-list__title">Products</h2>
       <div className="product-list__filters">
@@ -57,6 +60,8 @@ function ProductList() {
         <ProductDetail product={selectedProduct} onClose={() => setSelectedProduct(null)} />
       )}
     </div>
+    </>
+
   );
 }
 
