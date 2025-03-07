@@ -4,7 +4,7 @@ import './StoreFilter.css';
 function StoreFilter({ storeNames = [], selectedStore, setSelectedStore }) {
   if (!Array.isArray(storeNames)) {
     console.error('storeNames is not an array:', storeNames);
-    return null; // Or render a fallback UI
+    return null;
   }
 
   return (

@@ -1,83 +1,129 @@
-// src/components/Product/ProductForm.js
-
 import React, { useState } from 'react';
 import './ProductForm.css';
 
 function ProductForm({ onAddProduct }) {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [price, setPrice] = useState('');
-  const [storeName, setStoreName] = useState('Default Store');
+  const [formData, setFormData] = useState({
+    title: '',
+    description: '',
+    price: '',
+    storeName: 'Default Store',
+    image: ''
+  });
+
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [id]: value
+    }));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const newProduct = {
       id: Date.now(),
-      title,
-      description,
-      price: parseFloat(price),
-      storeName,
+      ...formData,
+      price: parseFloat(formData.price),
+      image: formData.image || 'https://via.placeholder.com/150',
+      rating: { rate: 0, count: 0 }
     };
     onAddProduct(newProduct);
-
-    // Reset form fields
-    setTitle('');
-    setDescription('');
-    setPrice('');
-    setStoreName('Default Store');
+    setFormData({
+      title: '',
+      description: '',
+      price: '',
+      storeName: 'Default Store',
+      image: ''
+    });
   };
 
   return (
     <form className="product-form" onSubmit={handleSubmit}>
-      <h3 className="form-title">Add / Edit Product</h3>
+      <header className="form-header">
+        <h3 className="form-title">Add New Product</h3>
+        <div className="form-decoration"></div>
+      </header>
 
-      <div className="form-group">
-        <label htmlFor="title" className="form-label">Product Title:</label>
-        <input
-          type="text"
-          id="title"
-          className="form-input"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          required
-        />
+      <div className="form-grid">
+        <div className="form-group">
+          <label htmlFor="title">
+            Product Title <span className="required">*</span>
+          </label>
+          <input
+            type="text"
+            id="title"
+            value={formData.title}
+            onChange={handleChange}
+            required
+            className="form-input"
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="price">
+            Price <span className="required">*</span>
+          </label>
+          <div className="input-group">
+            <span className="currency">$</span>
+            <input
+              type="number"
+              id="price"
+              value={formData.price}
+              onChange={handleChange}
+              step="0.01"
+              required
+              className="form-input"
+              placeholder="0.00"
+            />
+          </div>
+        </div>
+
+        <div className="form-group full-width">
+          <label htmlFor="description">Description</label>
+          <textarea
+            id="description"
+            value={formData.description}
+            onChange={handleChange}
+            className="form-textarea"
+            rows="4"
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="image">Image URL</label>
+          <input
+            type="url"
+            id="image"
+            value={formData.image}
+            onChange={handleChange}
+            className="form-input"
+            placeholder="https://example.com/image.jpg"
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="storeName">
+            Store <span className="required">*</span>
+          </label>
+          <div className="select-wrapper">
+            <select
+              id="storeName"
+              value={formData.storeName}
+              onChange={handleChange}
+              className="form-select"
+            >
+              <option value="Default Store">Default Store</option>
+              <option value="Premium Outlet">Premium Outlet</option>
+              <option value="Online Store">Online Store</option>
+            </select>
+          </div>
+        </div>
       </div>
 
-      <div className="form-group">
-        <label htmlFor="description" className="form-label">Description:</label>
-        <textarea
-          id="description"
-          className="form-textarea"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          required
-        />
-      </div>
-
-      <div className="form-group">
-        <label htmlFor="price" className="form-label">Price:</label>
-        <input
-          type="number"
-          id="price"
-          className="form-input"
-          value={price}
-          onChange={(e) => setPrice(e.target.value)}
-          required
-        />
-      </div>
-
-      <div className="form-group">
-        <label htmlFor="storeName" className="form-label">Store Name:</label>
-        <input
-          type="text"
-          id="storeName"
-          className="form-input"
-          value={storeName}
-          onChange={(e) => setStoreName(e.target.value)}
-        />
-      </div>
-
-      <button type="submit" className="form-button">Submit</button>
+      <button type="submit" className="form-button">
+        <span className="button-text">Create Product</span>
+        <span className="button-icon">→</span>
+      </button>
     </form>
   );
 }
